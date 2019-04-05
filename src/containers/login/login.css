@@ -1,0 +1,33 @@
+.title{
+  position: absolute;
+  top: 56px;
+  margin-left: 50px;
+  color: #1DA57A
+}
+.md-warp{
+  display:flex;
+  height: 100vh;
+  /* min-height: 750px; */
+  text-align: center;
+  background-color: #f1f1f1
+}
+.login{
+  color: #1DA57A
+}
+.login-form {
+  /* display: flex; */
+  /* align-items: center;
+  justify-content: center; */
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0,0,0,.1);
+  border: 1px solid rgba(29,165,122,.1);
+	margin: auto;
+  max-width: 300px;
+  padding: 30px 30px;
+}
+.login-form-forgot {
+  float: right;
+}
+ .login-form-button {
+  width: 100%;
+}
