@@ -1,0 +1,14 @@
+type User {
+  id: ID! @unique
+  userName: String! @unique
+  realName: String!
+  password: String!
+  isVip: Boolean! @default(value: "false")
+  vip: Vip
+}
+
+type Vip {
+  id: ID! @unique
+  level: Int
+  owner: User
+}
