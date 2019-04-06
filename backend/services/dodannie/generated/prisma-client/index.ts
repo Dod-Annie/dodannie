@@ -167,6 +167,8 @@ export type VipOrderByInput =
   | "id_DESC"
   | "level_ASC"
   | "level_DESC"
+  | "title_ASC"
+  | "title_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -176,6 +178,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export interface VipCreateWithoutOwnerInput {
   level?: Int;
+  title?: String;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -185,6 +188,7 @@ export type UserWhereUniqueInput = AtLeastOne<{
 
 export interface VipUpdateInput {
   level?: Int;
+  title?: String;
   owner?: UserUpdateOneWithoutVipInput;
 }
 
@@ -202,6 +206,7 @@ export interface UserCreateWithoutVipInput {
 
 export interface VipUpdateWithoutOwnerDataInput {
   level?: Int;
+  title?: String;
 }
 
 export interface UserCreateOneWithoutVipInput {
@@ -232,6 +237,20 @@ export interface VipWhereInput {
   level_lte?: Int;
   level_gt?: Int;
   level_gte?: Int;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
   owner?: UserWhereInput;
   AND?: VipWhereInput[] | VipWhereInput;
   OR?: VipWhereInput[] | VipWhereInput;
@@ -362,6 +381,7 @@ export interface UserUpdateInput {
 
 export interface VipCreateInput {
   level?: Int;
+  title?: String;
   owner?: UserCreateOneWithoutVipInput;
 }
 
@@ -394,6 +414,7 @@ export interface UserUpdateWithoutVipDataInput {
 
 export interface VipUpdateManyMutationInput {
   level?: Int;
+  title?: String;
 }
 
 export interface NodeNode {
@@ -403,6 +424,7 @@ export interface NodeNode {
 export interface VipPreviousValues {
   id: ID_Output;
   level?: Int;
+  title?: String;
 }
 
 export interface VipPreviousValuesPromise
@@ -410,6 +432,7 @@ export interface VipPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   level: () => Promise<Int>;
+  title: () => Promise<String>;
 }
 
 export interface VipPreviousValuesSubscription
@@ -417,6 +440,7 @@ export interface VipPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   level: () => Promise<AsyncIterator<Int>>;
+  title: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserEdge {
@@ -439,11 +463,13 @@ export interface UserEdgeSubscription
 export interface Vip {
   id: ID_Output;
   level?: Int;
+  title?: String;
 }
 
 export interface VipPromise extends Promise<Vip>, Fragmentable {
   id: () => Promise<ID_Output>;
   level: () => Promise<Int>;
+  title: () => Promise<String>;
   owner: <T = UserPromise>() => T;
 }
 
@@ -452,6 +478,7 @@ export interface VipSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   level: () => Promise<AsyncIterator<Int>>;
+  title: () => Promise<AsyncIterator<String>>;
   owner: <T = UserSubscription>() => T;
 }
 

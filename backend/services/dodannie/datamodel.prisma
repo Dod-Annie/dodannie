@@ -10,5 +10,6 @@ type User {
 type Vip {
   id: ID! @unique
   level: Int
+  title: String
   owner: User
 }

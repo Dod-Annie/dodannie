@@ -255,6 +255,7 @@ input UserWhereUniqueInput {
 type Vip {
   id: ID!
   level: Int
+  title: String
   owner: User
 }
 
@@ -266,6 +267,7 @@ type VipConnection {
 
 input VipCreateInput {
   level: Int
+  title: String
   owner: UserCreateOneWithoutVipInput
 }
 
@@ -276,6 +278,7 @@ input VipCreateOneWithoutOwnerInput {
 
 input VipCreateWithoutOwnerInput {
   level: Int
+  title: String
 }
 
 type VipEdge {
@@ -288,6 +291,8 @@ enum VipOrderByInput {
   id_DESC
   level_ASC
   level_DESC
+  title_ASC
+  title_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -297,6 +302,7 @@ enum VipOrderByInput {
 type VipPreviousValues {
   id: ID!
   level: Int
+  title: String
 }
 
 type VipSubscriptionPayload {
@@ -319,11 +325,13 @@ input VipSubscriptionWhereInput {
 
 input VipUpdateInput {
   level: Int
+  title: String
   owner: UserUpdateOneWithoutVipInput
 }
 
 input VipUpdateManyMutationInput {
   level: Int
+  title: String
 }
 
 input VipUpdateOneWithoutOwnerInput {
@@ -337,6 +345,7 @@ input VipUpdateOneWithoutOwnerInput {
 
 input VipUpdateWithoutOwnerDataInput {
   level: Int
+  title: String
 }
 
 input VipUpsertWithoutOwnerInput {
@@ -367,6 +376,20 @@ input VipWhereInput {
   level_lte: Int
   level_gt: Int
   level_gte: Int
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
   owner: UserWhereInput
   AND: [VipWhereInput!]
   OR: [VipWhereInput!]
