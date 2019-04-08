@@ -1,11 +1,7 @@
 import React from 'react'
 
-export default class HomePage extends React.Component{
-  render(){
-    return(
-      <div>
-        Homepage
-      </div>
-    )
+export default class HomePage extends React.Component {
+  render() {
+    return <h1>滚呆逼！</h1>
   }
 }
