@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
+import axios from 'axios'
 import './login.css'
 
 class NormalLoginForm extends React.Component {
@@ -13,7 +14,7 @@ class NormalLoginForm extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values)
         this.setState({ loading: true }, () => {
-          fetch('http://localhost:4466/', {
+          fetch('http://47.111.182.99:4000/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -28,6 +29,19 @@ class NormalLoginForm extends React.Component {
               } `
             })
           })
+            // axios
+            //   .post(
+            //     'http://localhost:4000/',
+            //     JSON.stringify({
+            //       query: `query {
+            //         users(where: { userName: "${values.userName}",password:"${
+            //         values.password
+            //       }" }) {
+            //           id
+            //         }
+            //       } `
+            //     })
+            //   )
             .then(response => {
               return response.json()
             })
