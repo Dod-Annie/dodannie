@@ -14,7 +14,7 @@ class NormalLoginForm extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values)
         this.setState({ loading: true }, () => {
-          fetch('http://47.111.182.99:4000/', {
+          fetch('http://localhost:4000/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -34,13 +34,14 @@ class NormalLoginForm extends React.Component {
             //     'http://localhost:4000/',
             //     JSON.stringify({
             //       query: `query {
-            //         users(where: { userName: "${values.userName}",password:"${
+            //           users(where: { userName: "${values.userName}",password:"${
             //         values.password
             //       }" }) {
-            //           id
-            //         }
-            //       } `
-            //     })
+            //             id
+            //           }
+            //         } `
+            //     }),
+            //     { timeout: 3000 }
             //   )
             .then(response => {
               return response.json()
@@ -57,6 +58,9 @@ class NormalLoginForm extends React.Component {
                 message.error('用户名或密码错误!')
               }
               this.setState({ loading: false, data: responseAsJson.data })
+            })
+            .catch(e => {
+              console.error(e)
             })
         })
       }
