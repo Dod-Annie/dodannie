@@ -2,33 +2,39 @@ import React from 'react'
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
 import axios from 'axios'
 import './login.css'
+import { request } from 'graphql-request'
 
 class NormalLoginForm extends React.Component {
   state = {
     loading: false
   }
-
+  query = `{
+    users {
+      id
+    }
+  }`
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
         this.setState({ loading: true }, () => {
-          fetch('http://localhost:4000/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              query: `query {
-                users(where: { userName: "${values.userName}",password:"${
-                values.password
-              }" }) {
-                  id
-                }
-              } `
-            })
-          })
+          request('/', this.query)
+            // fetch('http://localhost:4000/', {
+            //   method: 'POST',
+            //   headers: {
+            //     'Content-Type': 'application/json'
+            //   },
+            //   body: JSON.stringify({
+            //     query: `query {
+            //       users(where: { userName: "${values.userName}",password:"${
+            //       values.password
+            //     }" }) {
+            //         id
+            //       }
+            //     } `
+            //   })
+            // })
             // axios
             //   .post(
             //     'http://localhost:4000/',
@@ -44,24 +50,25 @@ class NormalLoginForm extends React.Component {
             //     { timeout: 3000 }
             //   )
             .then(response => {
-              return response.json()
+              console.log(response, 'res')
+              return response
             })
-            .then(responseAsJson => {
-              console.log(responseAsJson, 'responseAsJson', this.props)
-              let {
-                data: { users }
-              } = responseAsJson
-              if (users.length > 0) {
-                message.success('登录成功!')
-                this.props.history.push('/index')
-              } else {
-                message.error('用户名或密码错误!')
-              }
-              this.setState({ loading: false, data: responseAsJson.data })
-            })
-            .catch(e => {
-              console.error(e)
-            })
+          // .then(responseAsJson =5> {
+          //   console.log(responseAsJson, 'responseAsJson', this.props)
+          //   let {
+          //     data: { users }
+          //   } = responseAsJson
+          //   if (users.length > 0) {
+          //     message.success('登录成功!')
+          //     this.props.history.push('/index')
+          //   } else {
+          //     message.error('用户名或密码错误!')
+          //   }
+          //   this.setState({ loading: false, data: responseAsJson.data })
+          // })
+          // .catch(e => {
+          //   console.error(e)
+          // })
         })
       }
     })
