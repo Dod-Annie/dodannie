@@ -227,6 +227,10 @@ export interface NexusGenRootTypes {
   BatchPayload: { // root type
     count: any; // Long!
   }
+  Logged: { // root type
+    error: string; // String!
+    success: boolean; // Boolean!
+  }
   Mutation: {};
   PageInfo: { // root type
     endCursor?: string | null; // String
@@ -306,6 +310,10 @@ export interface NexusGenFieldTypes {
   BatchPayload: { // field return type
     count: any; // Long!
   }
+  Logged: { // field return type
+    error: string; // String!
+    success: boolean; // Boolean!
+  }
   Mutation: { // field return type
     createUser: NexusGenRootTypes['User']; // User!
     createVip: NexusGenRootTypes['Vip']; // Vip!
@@ -313,6 +321,7 @@ export interface NexusGenFieldTypes {
     deleteManyVips: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteUser: NexusGenRootTypes['User'] | null; // User
     deleteVip: NexusGenRootTypes['Vip'] | null; // Vip
+    Login: NexusGenRootTypes['Logged']; // Logged!
     updateManyUsers: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManyVips: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateUser: NexusGenRootTypes['User'] | null; // User
@@ -387,6 +396,10 @@ export interface NexusGenArgTypes {
     }
     deleteVip: { // args
       where: NexusGenInputs['VipWhereUniqueInput']; // VipWhereUniqueInput!
+    }
+    Login: { // args
+      password: string; // String!
+      userName: string; // String!
     }
     updateManyUsers: { // args
       data: NexusGenInputs['UserUpdateManyMutationInput']; // UserUpdateManyMutationInput!
@@ -466,7 +479,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AggregateUser" | "AggregateVip" | "BatchPayload" | "Mutation" | "PageInfo" | "Query" | "User" | "UserConnection" | "UserEdge" | "Vip" | "VipConnection" | "VipEdge";
+export type NexusGenObjectNames = "AggregateUser" | "AggregateVip" | "BatchPayload" | "Logged" | "Mutation" | "PageInfo" | "Query" | "User" | "UserConnection" | "UserEdge" | "Vip" | "VipConnection" | "VipEdge";
 
 export type NexusGenInputNames = "UserCreateInput" | "UserCreateOneWithoutVipInput" | "UserCreateWithoutVipInput" | "UserUpdateInput" | "UserUpdateManyMutationInput" | "UserUpdateOneWithoutVipInput" | "UserUpdateWithoutVipDataInput" | "UserUpsertWithoutVipInput" | "UserWhereInput" | "UserWhereUniqueInput" | "VipCreateInput" | "VipCreateOneWithoutOwnerInput" | "VipCreateWithoutOwnerInput" | "VipUpdateInput" | "VipUpdateManyMutationInput" | "VipUpdateOneWithoutOwnerInput" | "VipUpdateWithoutOwnerDataInput" | "VipUpsertWithoutOwnerInput" | "VipWhereInput" | "VipWhereUniqueInput";
 

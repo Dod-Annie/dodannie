@@ -14,6 +14,14 @@ type BatchPayload {
   count: Long!
 }
 
+type Logged {
+  """登录失败原因"""
+  error: String!
+
+  """登录成功"""
+  success: Boolean!
+}
+
 scalar Long
 
 type Mutation {
@@ -23,6 +31,7 @@ type Mutation {
   deleteManyVips(where: VipWhereInput): BatchPayload!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteVip(where: VipWhereUniqueInput!): Vip
+  Login(password: String!, userName: String!): Logged!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyVips(data: VipUpdateManyMutationInput!, where: VipWhereInput): BatchPayload!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
