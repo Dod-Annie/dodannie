@@ -23,6 +23,7 @@ const getClientEnvironment = require('./env')
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin')
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
+const autoprefixer = require('autoprefixer')
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false'
@@ -36,6 +37,10 @@ const useTypeScript = fs.existsSync(paths.appTsConfig)
 // style files regexes
 const cssRegex = /\.css$/
 const cssModuleRegex = /\.module\.css$/
+
+const lessRegex = /\.less$/
+const lessModuleRegex = /\.module\.less$/
+
 const sassRegex = /\.(scss|sass)$/
 const sassModuleRegex = /\.module\.(scss|sass)$/
 
@@ -101,14 +106,32 @@ module.exports = function(webpackEnv) {
         }
       }
     ].filter(Boolean)
+    // if (preProcessor) {
+    //   loaders.push({
+    //     loader: require.resolve(preProcessor),
+    //     options: {
+    //       sourceMap: isEnvProduction && shouldUseSourceMap
+    //     }
+    //   })
+    // }
     if (preProcessor) {
-      loaders.push({
-        loader: require.resolve(preProcessor),
-        options: {
-          sourceMap: isEnvProduction && shouldUseSourceMap
+      let loader = require.resolve(preProcessor)
+      if (preProcessor === 'less-loader') {
+        loader = {
+          loader,
+          options: {
+            modifyVars: {
+              //自定义主题
+              'primary-color': ' #1890ff '
+            },
+            javascriptEnabled: true,
+            sourceMap: isEnvProduction && shouldUseSourceMap
+          }
         }
-      })
+      }
+      loaders.push(loader)
     }
+
     return loaders
   }
 
@@ -337,16 +360,17 @@ module.exports = function(webpackEnv) {
                 ),
 
                 plugins: [
-                  [
-                    require.resolve('babel-plugin-named-asset-import'),
-                    {
-                      loaderMap: {
-                        svg: {
-                          ReactComponent: '@svgr/webpack?-svgo,+ref![path]'
-                        }
-                      }
-                    }
-                  ]
+                  // [
+                  //   require.resolve('babel-plugin-named-asset-import'),
+                  //   {
+                  //     loaderMap: {
+                  //       svg: {
+                  //         ReactComponent: '@svgr/webpack?-svgo,+ref![path]'
+                  //       }
+                  //     }
+                  //   }
+                  // ],
+                  ['import', { libraryName: 'antd', style: true }]
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -446,6 +470,75 @@ module.exports = function(webpackEnv) {
                 'sass-loader'
               )
             },
+
+            {
+              test: lessRegex,
+              exclude: lessModuleRegex,
+              use: getStyleLoaders({ importLoaders: 2 }, 'less-loader')
+            },
+            // Adds support for CSS Modules, but using SASS
+            // using the extension .module.scss or .module.sass
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 2,
+                  modules: true,
+                  getLocalIdent: getCSSModuleLocalIdent
+                },
+                'less-loader'
+              )
+            },
+
+            {
+              test: /\.less$/,
+              use: [
+                require.resolve('style-loader'),
+                {
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    importLoaders: 1
+                  }
+                },
+                {
+                  loader: require.resolve('postcss-loader'),
+                  options: {
+                    // Necessary for external CSS imports to work
+                    // https://github.com/facebookincubator/create-react-app/issues/2677
+                    ident: 'postcss',
+                    plugins: () => [
+                      require('postcss-flexbugs-fixes'),
+                      autoprefixer({
+                        browsers: [
+                          '>1%',
+                          'last 4 versions',
+                          'Firefox ESR',
+                          'not ie < 9' // React doesn't support IE8 anyway
+                        ],
+                        flexbox: 'no-2009'
+                      })
+                    ]
+                  }
+                },
+                {
+                  loader: require.resolve('less-loader'),
+                  // options: {
+                  //   modules: false,
+                  //   modifyVars: {
+                  //     '@primary-color': '#f9c700'
+                  //   }
+                  // }
+                  options: {
+                    modifyVars: {
+                      'primary-color': '#1DA57A',
+                      'link-color': '#1DA57A',
+                      'border-radius-base': '2px'
+                    }
+                  }
+                }
+              ]
+            },
+
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
